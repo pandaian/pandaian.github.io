@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta http-equiv="Content-type" content="text/html;charset=utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <title>挪车电话</title>
+        <style>
+            *{margin:0;padding:0;font-family:"PingFangSC-Regular","Microsoft YaHei", "微软雅黑", verdana, sans-serif, Simsun, STXihei;zoom:1;}
+            body{padding: 0 15px;}
+            .f-dn{display: none;}
+            .f-margin-top-5{margin-top: 5px;}
+            .bold{font-weight: bold;}
+            .title{text-align: center;font-size: 20px;height: 28px;line-height: 28px;margin-top: 35px;}
+            .title-info{margin-top: 5px;font-size: 15px;text-align: center;}
+            .qrcode-body{margin-top: 24px;border:1px solid #b9b9b9;background: #fff;padding:25px 15px;font-size: 16px;border-radius: 6px;}
+            .qrcode-body .step1 .step-title{color: #656565;margin-top: 0px;}
+            .qrcode-body .step-title{margin-top: 20px;margin-bottom: 10px;}
+            .qrcode-body .step p{font-size: 15px;line-height: 25px;}
+            .qrcode-footer{color: #656565;font-size: 15px;margin-top: 14px;}
+            .j-manaul{text-decoration: none;display: inline-block;border-radius: 6px;width: 110px;height: 26px;line-height: 26px;text-align: center;color: #3B78DD ;border:1px solid #3B78DD;margin-left: 5px;}
+            .f-manaul{text-decoration: none;display: inline-block;border-radius: 4px;width: 274px;height: 64px;line-height: 64px;text-align: center;color: white;background: #3B78DD;margin-left: 5px;font-size: 50px;;}
+        </style>
+	</head>
+	<body>
+        <div class="qrcode">
+            <div align="center"><a class="title f-manaul">皖H·25522</a></div>
+            <div class="title bold">临时停靠，请多关照</div>
+            <div class="title-info">人在附近，致电挪车</div>
+            <div class="qrcode-body">
+                <div class="step step1">
+                	<div class="step-title">第一步：手机扫描二维码（已完成）</div>
+                </div>
+                <div class="step step2">
+                    <div class="step-title bold">第二步：自动弹出车主电话<a href="tel:18656898956" class="j-manaul">手动拨号</a></div>
+                </div>
+                <div class="step step3">
+                    <div class="step-title bold">第三步：呼叫成功</div>
+                    <p>请耐心等待，车主正在速速赶往</p>
+                </div>
+            </div>
+        </div>
+    </body>
+            <div class="qrcode-footer">
+                <div>电话没回应？发个短信试试：<a class="j-manaul">点击发送</a>
+			    <p>如对话框含有特殊字符，请忽略。</p>
+            </div>
+			    <script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+    <script>
+        $(function(){
+
+
+            var u = navigator.userAgent;
+            var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1;//判断是否是 android终端
+            var isUc = u.indexOf('UCBrowser') > -1; 
+            var  isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+            if(isIOS&&!isUc){
+                window.location.href = 'tel:18656898956';
+            }else if(isAndroid || isUc){
+                window.location.href = 'tel:18656898956'; 
+            }
+
+
+            $('.j-manaul').click(function(){
+            if(isIOS&&!isUc){
+                window.location.href = 'sms:18656898956&body=您的车挡道，请挪车！';
+            }else if(isAndroid || isUc){
+                window.location.href = 'sms:18656898956?body=您的车挡道，请挪车！'; 
+            }
+            })
+        })
+		</script>
+</html>
