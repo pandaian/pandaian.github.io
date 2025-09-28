@@ -29,7 +29,7 @@
     <link rel="icon" href="/favicon.ico">
   
 
-  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
 
 
   
@@ -155,7 +155,7 @@
         pandaian
       </h3>
       <div class="slogan">
-        a citizen of China
+        Be fine, be kind.
       </div>
     </div>
   </div>
@@ -272,17 +272,10 @@
     
   <div class="pagination">
     <nav class="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><a class="extend next" rel="next" href="/archives/page/2/">&lt;i class&#x3D;&quot;icon-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><a class="extend next" rel="next" href="/archives/page/2/"><i class="icon-angle-right"></i></a>
     </nav>
   </div>
 
-  <!-- JS 动态解析转义的 HTML -->
-  <script>
-    document.querySelectorAll('.page-nav a').forEach(a => {
-      // 把文本内容作为 HTML 插入
-      a.innerHTML = a.textContent;
-    });
-  </script>
 
   </div>
 </div>
@@ -407,10 +400,7 @@
   }
 
   window.onload = function() {
-    loadScript('/js/bundle.js', function() {
-      // load success
-    });
-	loadScript('/js/Hi.js', function() {
+    loadScript('/js/bundle.js?235683', function() {
       // load success
     });
   }
