@@ -205,6 +205,13 @@
     </nav>
   </div>
 
+  <!-- JS 动态解析转义的 HTML -->
+  <script>
+    document.querySelectorAll('.page-nav a').forEach(a => {
+      // 把文本内容作为 HTML 插入
+      a.innerHTML = a.textContent;
+    });
+  </script>
 
   </div>
 </div>
