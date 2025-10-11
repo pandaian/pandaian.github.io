@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  <title>trojan and nginx to using web service | pandaian</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Using trojan+nginx reachs that pretending a normal website to be a proxy service  first of all， we should know that the trojan forwards the all unknown packets to the remote port， the default remote">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="trojan and nginx to using web service">
+<meta property="og:url" content="https://i.pandaian.com/2020/08/25/Nginx-Trojan/index.html">
+<meta property="og:site_name" content="pandaian">
+<meta property="og:description" content="Using trojan+nginx reachs that pretending a normal website to be a proxy service  first of all， we should know that the trojan forwards the all unknown packets to the remote port， the default remote">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-08-25T14:44:22.502Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="trojan and nginx to using web service">
+<meta name="twitter:description" content="Using trojan+nginx reachs that pretending a normal website to be a proxy service  first of all， we should know that the trojan forwards the all unknown packets to the remote port， the default remote">
+  
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/typing.css">
+  <link rel="stylesheet" href="/css/donate.css">
+  
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  
+</head>
+
+  
+    
+      <body>
+    
+  
+      <div id="container" class="container">
+        <article id="post-Nginx-Trojan" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <header id="header" class="header">
+  <nav class="mobile-nav">
+    <h1 class="nickname">pandaian</h1>
+    <ul class="mobile-nav-menu">
+      <label for="mobile-menu-toggle"><a id="menu-button">&#9776; Menu</a></label>
+      <input type="checkbox" id="mobile-menu-toggle"/>
+      <ul class="mobile-nav-link">
+        
+        <a href="/">Home</a>
+        
+        <a href="/archives">Archives</a>
+        
+        <a href="/about">About</a>
+        
+      </ul>
+    </ul>
+  </nav>
+	
+		<nav id="main-nav" class="main-nav">
+	
+	
+	  <a class="main-nav-link" href="/">Home</a>
+	
+	  <a class="main-nav-link" href="/archives">Archives</a>
+	
+	  <a class="main-nav-link" href="/about">About</a>
+	
+  </nav>
+</header>
+
+  <hr/>
+  <div class="article-inner">
+    
+
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      trojan and nginx to using web service
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry typo" itemprop="articleBody">
+      
+        <p><strong> Using trojan+nginx reachs that pretending a normal website to be a proxy service </strong></p>
+<p>first of all， we should know that the trojan forwards the all unknown packets to the remote port， the default remote port is 80. It’s a nice design for us to setting the environment.</p>
+<p>if(packets is trojan)<br>{ do proxy service}<br>else<br>{ forwarding packets to port 80 }</p>
+<p>so, it’s easy to achieve it that we just configure the web server.<br>My web server is using Nginx, the fllowing is configuration which I have configured.</p>
+<p>configuration file:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> server &#123;</span><br><span class="line">   listen 0.0.0.0:80;</span><br><span class="line">   listen [::]:80;</span><br><span class="line">   server_name _;</span><br><span class="line">   return 301 https://$host$request_uri;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>The first server is listening port 80 from all IP address. Its mission is redirecting all request to port 443(https).</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen 127.0.0.1:80;</span><br><span class="line">    server_name _ www.example.com; #example domain</span><br><span class="line">    access_log /data/wwwlogs/access_nginx.log combined;</span><br><span class="line">    root /data/wwwroot/default;</span><br><span class="line">    index index.html index.htm index.php;</span><br><span class="line">    #error_page 404 /404.html;</span><br><span class="line">    #error_page 502 /502.html;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>The second is listening localhost port 80, this server is accepting packets from trojan which is true https packets.</p>
+
+      
+      
+    </div>
+    <footer class="article-footer">
+      <ul class="article-meta">
+        <li>
+          <span class="label">Published Date:</span>
+          <a href="/2020/08/25/Nginx-Trojan/" class="article-date">
+  <time class="dt-published" datetime="2020-08-25T14:30:07.000Z" itemprop="datePublished">2020-08-25</time>
+</a>
+
+        </li>
+        
+        
+          <li>
+            <span class="label">Tag:</span>
+            
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
+
+
+          </li>
+        
+        <hr/>
+      </ul>
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav" class="article-nav">
+  
+    <a href="/2020/08/26/AirNavigation/" id="article-nav-newer" class="article-nav-link-wrap newer">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Some abbr in Air Navigation
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/08/24/Oneinstack_update_ssl/" id="article-nav-older" class="article-nav-link-wrap older">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Update SSL Certificate</div>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+
+
+
+
+
+
+
+
+
+      </div>
+      
+    <footer id="footer" class="post-footer footer">
+      
+      <hr/>
+      <div id="footerContent" class="footer-content">
+        <p>ipsum dolor sit amet, <strong>consectetur adipiscing elit.</strong> Fusce eget urna vitae velit <em>eleifend interdum at ac nisi. In nec ligula lacus. Cum sociis natoque</em> penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed eu cursus erat, ut dapibus quam. Post</p>
+
+
+      </div>
+    </footer>
+
+      
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+
+
+<script src="/js/typing.js"></script>
+<!--[if lt IE 9]><script src="https://cdn.jsdelivr.net/npm/html5shiv@3/dist/html5shiv.min.js"></script><![endif]-->
+
+
+
+
+
+
+
+    </div>
+  </body>
+</html>
