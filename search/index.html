@@ -3,16 +3,16 @@
 <head>
   <meta charset="utf-8">
   
-  <title>search | pandaian</title>
+  <title>Search | pandaian</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="og:type" content="website">
-<meta property="og:title" content="search">
+<meta property="og:title" content="Search">
 <meta property="og:url" content="https://i.pandaian.com/search/index.html">
 <meta property="og:site_name" content="pandaian">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-09-06T09:19:18.000Z">
+<meta property="og:updated_time" content="2026-05-04T15:06:38.345Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="search">
+<meta name="twitter:title" content="Search">
   
   
     <link rel="shortcut icon" href="/favicon.ico">
@@ -33,7 +33,7 @@
     
   
       <div id="container" class="container">
-        <article id="search-" class="h-entry article article-type-search" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+        <div class="archive-container">
   <header id="header" class="header">
   <nav class="mobile-nav">
     <ul class="mobile-nav-menu">
@@ -46,6 +46,8 @@
         <a href="/archives">Archives</a>
         
         <a href="/about">About</a>
+        
+        <a href="/search">Search</a>
         
       </ul>
     </ul>
@@ -60,60 +62,66 @@
 	
 	  <a class="main-nav-link" href="/about">About</a>
 	
+	  <a class="main-nav-link" href="/search">Search</a>
+	
   </nav>
 </header>
 
-  <hr/>
-  <div class="article-inner">
-    
 
-    
-      <header class="article-header">
-        
   
-    <h1 class="p-name article-title" itemprop="headline name">
-      search
-    </h1>
+    <hr class="header-hr"/>
   
 
-      </header>
-    
-    <div class="e-content article-entry typo" itemprop="articleBody">
-      
-        
-      
-      
-    </div>
-    <footer class="article-footer">
-      <ul class="article-meta">
-        <li>
-          <span class="label">Published Date:</span>
-          <a href="/search/index.html" class="article-date">
-  <time class="dt-published" datetime="2019-03-29T15:25:48.056Z" itemprop="datePublished">2019-03-29</time>
-</a>
-
-        </li>
-        
-        
-        <hr/>
-      </ul>
-    </footer>
+  <div class="search-box">
+    <input id="search-input" type="text" placeholder="Hunt for my bugs..." />
   </div>
-  
-    
 
-  
-</article>
+  <section class="archives-wrap">
+    <div class="archives" id="search-result"></div>
+  </section>
+</div>
 
+<script>
+fetch('/search.json')
+  .then(res => res.json())
+  .then(data => {
+    const input = document.getElementById('search-input');
+    const result = document.getElementById('search-result');
 
+    input.addEventListener('input', function () {
+      const keyword = this.value.toLowerCase().trim();
+      let html = '';
 
+      if (!keyword) {
+        result.innerHTML = '';
+        return;
+      }
 
+      data.forEach((post, i) => {
+        if (
+          (post.title || '').toLowerCase().includes(keyword) ||
+          (post.content || '').toLowerCase().includes(keyword)
+        ) {
+          html += `
+            <div class="archive-article archive-type-post">
+              <div class="archive-article-inner">
+                <header class="archive-article-header">
+                  <h1 itemprop="name">
+                    <a class="archive-article-title" href="${post.url}">
+                      ${post.title}
+                    </a>
+                  </h1>
+                </header>
+              </div>
+            </div>
+          `;
+        }
+      });
 
-
-
-
-
-
+      result.innerHTML = html;
+    });
+  });
+</script>
       </div>
       
     <footer id="footer" class="post-footer footer">
